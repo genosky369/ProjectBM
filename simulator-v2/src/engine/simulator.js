@@ -221,14 +221,16 @@ export function applySoulEnhancement(inv) {
 // ============================================================
 export function applyCardEnhancement(inv) {
   if (!inv.카드.enhanced) inv.카드.enhanced = {};
+  if (!inv.카드.currentLevel) inv.카드.currentLevel = {};
   const gc = inv.카드.gradeCount;
 
   for (const grade of ['일반', '고급', '희귀', '영웅', '고대', '전설']) {
     const needs = CARD_EVOLVE_NEED[grade];
     let available = gc[grade] || 0;
-    let level = 0;
+    // 이전 레벨부터 이어서 강화 (레벨은 절대 떨어지지 않음)
+    let level = inv.카드.currentLevel[grade] || 0;
 
-    for (let lv = 0; lv < 5; lv++) {
+    for (let lv = level; lv < 5; lv++) {
       if (available >= needs[lv]) {
         available -= needs[lv];
         level = lv + 1;
@@ -237,6 +239,7 @@ export function applyCardEnhancement(inv) {
       }
     }
 
+    inv.카드.currentLevel[grade] = level;
     inv.카드.enhanced[grade] = {
       maxLevel: level,
       remaining: available,
