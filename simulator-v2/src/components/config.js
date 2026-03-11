@@ -10,8 +10,8 @@ export const STORAGE_KEY_BM_GROUPS = "bm_sim_bm_groups_v2";
 export const DEFAULT_PLC_MAX = {
   클래스: { 불멸: 11, 전설: 29, 고대: 52, 영웅: 130, 영웅각성: 19, 고대각성: 22, 전설각성: 30 },
   펫:    { 불멸: 6, 전설: 15, 고대: 25, 영웅: 58, 영웅각성: 22, 고대각성: 12, 전설각성: 7 },
-  투혼:  { 불멸: 2, 전설: 8, 고대: 14 },
-  카드:  { 전설: 3, 고대: 11 },
+  투혼:  { 불멸: 2, 전설: 8, 고대: 14, 불멸1레벨: 5, 불멸2레벨: 5 },
+  카드:  { 전설: 3, 고대: 11, 전설레벨: 5 },
 };
 
 /** Default user spec (starting inventory) */
@@ -42,12 +42,15 @@ export const SYSTEM_METRICS = {
   ],
   투혼: [
     { key: "불멸", label: "불멸", color: "#dc2626", getValue: s => s.투혼.불멸, plcPath: ["투혼", "불멸"] },
-    { key: "전설", label: "전설", color: "#f97316", getValue: s => s.투혼.전설, plcPath: ["투혼", "전설"] },
+    { key: "전설", label: "전설 5강", color: "#f97316", getValue: s => s.투혼.전설, plcPath: ["투혼", "전설"] },
     { key: "고대", label: "고대", color: "#eab308", getValue: s => s.투혼.고대, plcPath: ["투혼", "고대"] },
+    { key: "불멸1레벨", label: "불멸1 레벨", color: "#ec4899", strokeDasharray: "6 3", getValue: s => s.투혼.불멸1레벨, plcPath: ["투혼", "불멸1레벨"] },
+    { key: "불멸2레벨", label: "불멸2 레벨", color: "#a855f7", strokeDasharray: "6 3", getValue: s => s.투혼.불멸2레벨, plcPath: ["투혼", "불멸2레벨"] },
   ],
   카드: [
     { key: "전설", label: "전설", color: "#0891b2", getValue: s => s.카드.전설, plcPath: ["카드", "전설"] },
     { key: "고대", label: "고대", color: "#7c3aed", getValue: s => s.카드.고대, plcPath: ["카드", "고대"] },
+    { key: "전설레벨", label: "전설 레벨", color: "#f43f5e", strokeDasharray: "6 3", getValue: s => s.카드.전설레벨, plcPath: ["카드", "전설레벨"] },
   ],
 };
 
@@ -68,11 +71,14 @@ export const TABLE_ROWS = [
   { label: "펫 영웅각성", getValue: s => s.펫.영웅각성, plcPath: ["펫", "영웅각성"] },
   null,
   { label: "투혼 불멸", getValue: s => s.투혼.불멸, plcPath: ["투혼", "불멸"] },
-  { label: "투혼 전설", getValue: s => s.투혼.전설, plcPath: ["투혼", "전설"] },
+  { label: "투혼 전설 5강", getValue: s => s.투혼.전설, plcPath: ["투혼", "전설"] },
   { label: "투혼 고대", getValue: s => s.투혼.고대, plcPath: ["투혼", "고대"] },
+  { label: "투혼 불멸1 레벨", getValue: s => s.투혼.불멸1레벨, plcPath: ["투혼", "불멸1레벨"] },
+  { label: "투혼 불멸2 레벨", getValue: s => s.투혼.불멸2레벨, plcPath: ["투혼", "불멸2레벨"] },
   null,
   { label: "카드 전설", getValue: s => s.카드.전설, plcPath: ["카드", "전설"] },
   { label: "카드 고대", getValue: s => s.카드.고대, plcPath: ["카드", "고대"] },
+  { label: "카드 전설 레벨", getValue: s => s.카드.전설레벨, plcPath: ["카드", "전설레벨"] },
 ];
 
 /**

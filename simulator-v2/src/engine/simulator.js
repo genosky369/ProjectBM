@@ -207,6 +207,13 @@ export function applySoulEnhancement(inv) {
   inv.투혼.enhanced['전설_5강_총'] = legendCount5;
   inv.투혼.enhanced['전설_진행중_xp'] = remainXp;
   inv.투혼.enhanced['총_xp'] = xpPool;
+
+  // 불멸 투혼 개별 레벨 추적
+  if (!inv.투혼.불멸레벨) inv.투혼.불멸레벨 = [...(inv.투혼.existingLevels || [])];
+  // 새로 생산된 불멸은 5강 (완전 강화)
+  for (let i = 0; i < immortalCount; i++) {
+    inv.투혼.불멸레벨.push(5);
+  }
 }
 
 // ============================================================
@@ -449,11 +456,14 @@ export function takeSnapshot(inv) {
       불멸: soulEnhanced['불멸'] || 0,
       전설: legendTotal,
       고대: soulProduced['고대'] || 0,
+      불멸1레벨: (inv.투혼.불멸레벨 || [])[0] || 0,
+      불멸2레벨: (inv.투혼.불멸레벨 || [])[1] || 0,
     },
     카드: {
       전설: inv.카드.preEnhance?.['전설'] || 0,
       고대: inv.카드.preEnhance?.['고대'] || 0,
       영웅: inv.카드.preEnhance?.['영웅'] || 0,
+      전설레벨: inv.카드.enhanced?.['전설']?.maxLevel || 0,
     },
   };
 }
