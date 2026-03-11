@@ -1,6 +1,7 @@
 [build]
+  base      = "simulator-v2"
   command   = "npm run build"
-  publish   = "C:/simulator_build"
+  publish   = "simulator-v2/dist"
 
 [[redirects]]
   from   = "/*"

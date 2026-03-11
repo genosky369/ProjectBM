@@ -6,8 +6,8 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   build: {
-    // OneDrive 경로(한글/공백)에서 Rollup 쓰기 실패 방지: 짧은 임시 경로로 빌드
-    outDir: 'C:/simulator_build_v2',
+    // Netlify: 상대경로 사용, 로컬: OneDrive 문제 시 C:/simulator_build_v2로 수동 변경
+    outDir: process.env.NETLIFY ? 'dist' : 'C:/simulator_build_v2',
     emptyOutDir: true,
   },
 })
