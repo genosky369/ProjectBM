@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     // OneDrive 경로(한글/공백)에서 Rollup 쓰기 실패 방지: 짧은 임시 경로로 빌드
-    outDir: 'C:/simulator_build',
+    outDir: 'C:/simulator_build_v2',
     emptyOutDir: true,
   },
 })

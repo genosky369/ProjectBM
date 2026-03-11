@@ -108,14 +108,24 @@ function addToInventory(inv, system, grade) {
 
 // ============================================================
 // 합성 처리 (클래스/펫)
+// plcMax가 주어지면: 상위 등급이 PLC 80% 이상이면 해당 합성 차단 (각성 우선)
 // ============================================================
-export function applySynthesis(inv, system, rules, pityState) {
+const PLC_THRESHOLD = 0.8;
+
+export function applySynthesis(inv, system, rules, pityState, plcMax) {
+  const sysPlc = plcMax?.[system] || {};
   let changed = true;
   while (changed) {
     changed = false;
     for (const rule of rules) {
       const { from, to, need, prob, returnOnFail, pity } = rule;
       const src = system === '클래스' ? inv.클래스 : inv.펫;
+
+      // PLC 차단: 상위 등급(to)이 PLC 80% 이상이면 이 합성 건너뛰기
+      const toPlc = sysPlc[to] || 0;
+      if (toPlc > 0 && (src[to] || 0) >= toPlc * PLC_THRESHOLD) {
+        continue;
+      }
 
       while ((src[from] || 0) >= need) {
         const key = `${from}->${to}`;
@@ -128,6 +138,12 @@ export function applySynthesis(inv, system, rules, pityState) {
 
         if (success) {
           src[to] = (src[to] || 0) + 1;
+          // 합성 후 상위 등급이 PLC 80%에 도달하면 중단
+          if (toPlc > 0 && (src[to] || 0) >= toPlc * PLC_THRESHOLD) {
+            changed = true;
+            pityState[key] = 0;
+            break;
+          }
           pityState[key] = 0;
           changed = true;
         } else {
@@ -223,45 +239,59 @@ export function applyCardEnhancement(inv) {
 }
 
 // ============================================================
-// 각성 처리
+// 각성 처리 (클래스/펫)
+// 해당 등급의 PLC 80% 이상 달성해야 각성 시작
+// 각성 전용 아이템 우선 소비, 부족 시 보유 카드 소비
 // ============================================================
-export function applyAwakening(inv) {
+export function applyAwakening(inv, plcMax) {
+  const classPlc = plcMax?.클래스 || {};
   for (const [grade, steps] of Object.entries(CLASS_AWAKENING)) {
+    // 해당 등급 PLC 80% 미달이면 각성 안 함
+    const gradeTarget = classPlc[grade] || 0;
+    if (gradeTarget > 0 && (inv.클래스[grade] || 0) < gradeTarget * PLC_THRESHOLD) continue;
+
     const items = inv.awakeningItems.클래스;
     for (let step = 0; step < steps.length; step++) {
       const { need, itemKey, pointGain } = steps[step];
       const pointNeeded = steps.slice(0, step + 1).reduce((a, s) => a + s.pointGain, 0);
       if ((inv.awakening.클래스[grade] || 0) >= pointNeeded) continue;
 
-      while ((inv.클래스[grade] || 0) >= need) {
-        inv.클래스[grade] -= need;
-        inv.awakening.클래스[grade] = (inv.awakening.클래스[grade] || 0) + pointGain;
-        break;
-      }
-      while ((items[itemKey] || 0) >= need) {
+      // 각성 전용 아이템 우선
+      if ((items[itemKey] || 0) >= need) {
         items[itemKey] -= need;
         inv.awakening.클래스[grade] = (inv.awakening.클래스[grade] || 0) + pointGain;
-        break;
+        continue;
+      }
+      // 부족 시 보유 카드 소비
+      if ((inv.클래스[grade] || 0) >= need) {
+        inv.클래스[grade] -= need;
+        inv.awakening.클래스[grade] = (inv.awakening.클래스[grade] || 0) + pointGain;
       }
     }
   }
 
+  const petPlc = plcMax?.펫 || {};
   for (const [grade, steps] of Object.entries(PET_AWAKENING)) {
+    // 해당 등급 PLC 80% 미달이면 각성 안 함
+    const gradeTarget = petPlc[grade] || 0;
+    if (gradeTarget > 0 && (inv.펫[grade] || 0) < gradeTarget * PLC_THRESHOLD) continue;
+
     const items = inv.awakeningItems.펫;
     for (let step = 0; step < steps.length; step++) {
       const { need, itemKey, pointGain } = steps[step];
       const pointNeeded = steps.slice(0, step + 1).reduce((a, s) => a + s.pointGain, 0);
       if ((inv.awakening.펫[grade] || 0) >= pointNeeded) continue;
 
-      while ((inv.펫[grade] || 0) >= need) {
-        inv.펫[grade] -= need;
-        inv.awakening.펫[grade] = (inv.awakening.펫[grade] || 0) + pointGain;
-        break;
-      }
-      while ((items[itemKey] || 0) >= need) {
+      // 각성 전용 아이템 우선
+      if ((items[itemKey] || 0) >= need) {
         items[itemKey] -= need;
         inv.awakening.펫[grade] = (inv.awakening.펫[grade] || 0) + pointGain;
-        break;
+        continue;
+      }
+      // 부족 시 보유 카드 소비
+      if ((inv.펫[grade] || 0) >= need) {
+        inv.펫[grade] -= need;
+        inv.awakening.펫[grade] = (inv.awakening.펫[grade] || 0) + pointGain;
       }
     }
   }
@@ -272,7 +302,7 @@ export function applyAwakening(inv) {
 // ============================================================
 import { TICKET_NAME_MAP, TREASURE_HUNTER_XP } from '../data/constants';
 
-export function applyPackage(inv, ticketItems, pityState) {
+export function applyPackage(inv, ticketItems, pityState, plcMax) {
   for (const { system, ticketType, pulls, quantity } of ticketItems) {
     if (ticketType === 'treasure') {
       inv.treasureXP += (TREASURE_HUNTER_XP[system] || 0) * quantity;
@@ -294,31 +324,44 @@ export function applyPackage(inv, ticketItems, pityState) {
     }
   }
 
-  const classPity = pityState.클래스;
-  const petPity = pityState.펫;
-  applySynthesis(inv, '클래스', SYNTH_RULES.클래스, classPity);
-  // 클래스 불멸은 합성/승급식으로 획득 불가 — 호출 제거
-  applySynthesis(inv, '펫', SYNTH_RULES.펫, petPity);
+  // 클래스/펫: 합성(PLC 80% 차단) → 각성 → 잔여 합성
+  applySynthesis(inv, '클래스', SYNTH_RULES.클래스, pityState.클래스, plcMax);
+  applyAwakening(inv, plcMax);
+  // 각성 완료 후 잔여 재료로 다시 합성 시도 (PLC 차단 없이)
+  applySynthesis(inv, '클래스', SYNTH_RULES.클래스, pityState.클래스);
 
-  applySynthesisForSoul(inv, pityState.투혼);
+  applySynthesis(inv, '펫', SYNTH_RULES.펫, pityState.펫, plcMax);
+  applyAwakening(inv, plcMax);
+  applySynthesis(inv, '펫', SYNTH_RULES.펫, pityState.펫);
+
+  // 투혼: 합성(PLC 80% 차단) → 성장 → 잔여 합성
+  applySynthesisForSoul(inv, pityState.투혼, plcMax);
   applySoulEnhancement(inv);
+  applySynthesisForSoul(inv, pityState.투혼);
 
-  applySynthesisForCard(inv, pityState.카드);
-  // 카드 개수 스냅샷: 강화(레벨업) 전 합성 완료된 등급별 보유 수량
+  // 카드: 합성(PLC 80% 차단) → 성장 → 잔여 합성
+  applySynthesisForCard(inv, pityState.카드, plcMax);
   inv.카드.preEnhance = { ...inv.카드.gradeCount };
   applyCardEnhancement(inv);
-
-  applyAwakening(inv);
+  applySynthesisForCard(inv, pityState.카드);
 }
 
-function applySynthesisForSoul(inv, pityState) {
+function applySynthesisForSoul(inv, pityState, plcMax) {
   if (!inv.투혼.produced) inv.투혼.produced = {};
+  const sysPlc = plcMax?.투혼 || {};
   let changed = true;
   while (changed) {
     changed = false;
     for (const rule of SYNTH_RULES.투혼) {
       const gc = inv.투혼.gradeCount;
       const { from, to, need, prob, returnOnFail, pity } = rule;
+
+      // PLC 차단: 상위 등급(to)이 PLC 80% 이상이면 합성 건너뛰기
+      const toPlc = sysPlc[to] || 0;
+      if (plcMax && toPlc > 0 && (gc[to] || 0) >= toPlc * PLC_THRESHOLD) {
+        continue;
+      }
+
       while ((gc[from] || 0) >= need) {
         const key = `${from}->${to}`;
         pityState[key] = pityState[key] || 0;
@@ -329,6 +372,7 @@ function applySynthesisForSoul(inv, pityState) {
           inv.투혼.produced[to] = (inv.투혼.produced[to] || 0) + 1;
           pityState[key] = 0;
           changed = true;
+          if (plcMax && toPlc > 0 && (gc[to] || 0) >= toPlc * PLC_THRESHOLD) break;
         } else {
           gc[from] += returnOnFail;
           pityState[key]++;
@@ -338,13 +382,21 @@ function applySynthesisForSoul(inv, pityState) {
   }
 }
 
-function applySynthesisForCard(inv, pityState) {
+function applySynthesisForCard(inv, pityState, plcMax) {
+  const sysPlc = plcMax?.카드 || {};
   let changed = true;
   while (changed) {
     changed = false;
     for (const rule of SYNTH_RULES.카드) {
       const gc = inv.카드.gradeCount;
       const { from, to, need, prob, returnOnFail, pity } = rule;
+
+      // PLC 차단: 상위 등급(to)이 PLC 80% 이상이면 합성 건너뛰기
+      const toPlc = sysPlc[to] || 0;
+      if (plcMax && toPlc > 0 && (gc[to] || 0) >= toPlc * PLC_THRESHOLD) {
+        continue;
+      }
+
       while ((gc[from] || 0) >= need) {
         const key = `${from}->${to}`;
         pityState[key] = pityState[key] || 0;
@@ -354,6 +406,7 @@ function applySynthesisForCard(inv, pityState) {
           gc[to] = (gc[to] || 0) + 1;
           pityState[key] = 0;
           changed = true;
+          if (plcMax && toPlc > 0 && (gc[to] || 0) >= toPlc * PLC_THRESHOLD) break;
         } else {
           gc[from] += returnOnFail;
           pityState[key]++;
@@ -408,7 +461,7 @@ export function takeSnapshot(inv) {
 // ============================================================
 // 메인 시뮬레이션 실행
 // ============================================================
-export function runSimulation(packages, startInventory) {
+export function runSimulation(packages, startInventory, plcMax) {
   const allRuns = [];
 
   for (let run = 0; run < SIMULATION_RUNS; run++) {
@@ -417,7 +470,7 @@ export function runSimulation(packages, startInventory) {
     const snapshots = [];
 
     for (const pkg of packages) {
-      applyPackage(inv, pkg.ticketItems, pityState);
+      applyPackage(inv, pkg.ticketItems, pityState, plcMax);
       snapshots.push({ date: pkg.date, snapshot: takeSnapshot(inv) });
     }
 

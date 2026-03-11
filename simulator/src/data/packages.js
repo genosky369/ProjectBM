@@ -1,84 +1,740 @@
-// ============================================================
-// packages.js
-// 기본 패키지 데이터. 실제 판매 패키지 추가/수정은 이 파일에서.
-// ============================================================
+// packages.js - BM기획서 Excel에서 자동 생성
+// 0128BM: 1월 28일 / 0204BM: 2월 4일 / 0211BM: 2월 11일
 
 export const DEFAULT_PACKAGES = [
   {
     id: 'pkg_001',
-    name: 'Goods_001 (12,000원)',
+    name: '[0128] 대단한 보물사냥꾼 패키지',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
     items: [
-      { name: '찬란한 클래스 11회', quantity: 20 },
-      { name: '찬란한 펫 11회', quantity: 20 },
-      { name: '찬란한 투혼 11회', quantity: 20 },
-      { name: '찬란한 카드 11회', quantity: 20 },
+      { name: '대단한 보물사냥꾼', quantity: 1 },
+      { name: '노련한 보물사냥꾼', quantity: 2 },
+      { name: '능숙한 보물사냥꾼', quantity: 5 },
+    ],
+    rawItems: [
+      { name: '★대단한 보물사냥꾼 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★노련한 보물사냥꾼 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★능숙한 보물사냥꾼 확정 소환권 (캐릭터 귀속)', quantity: 5 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
     ],
   },
   {
     id: 'pkg_002',
-    name: 'Goods_002 (33,000원)',
+    name: '[0128] 카드 올인원 패키지',
+    price: 33000,
+    purchaseLimit: '캐릭터당 4회',
     items: [
-      { name: '신비로운 클래스 11회', quantity: 10 },
-      { name: '신비로운 펫 11회', quantity: 10 },
-      { name: '신비로운 투혼 11회', quantity: 10 },
-      { name: '신비로운 카드 11회', quantity: 10 },
+      { name: '눈부신 카드 11회', quantity: 2 },
+      { name: '신비로운 카드 11회', quantity: 30 },
+      { name: '찬란한 카드 11회', quantity: 100 },
+    ],
+    rawItems: [
+      { name: '★눈부신 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 2 },
+      { name: '★신비로운 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 30 },
+      { name: '★찬란한 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 100 },
+      { name: '딸기 파르페 (귀속)', quantity: 2 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 20 },
     ],
   },
   {
     id: 'pkg_003',
-    name: 'Goods_003 (55,000원)',
+    name: '[0128] 신비로운 영웅 카드 증표 패키지',
+    price: 55000,
+    purchaseLimit: '캐릭터당 주 8회',
     items: [
-      { name: '눈부신 클래스 11회', quantity: 5 },
-      { name: '눈부신 펫 11회', quantity: 5 },
-      { name: '눈부신 투혼 11회', quantity: 5 },
-      { name: '눈부신 카드 11회', quantity: 5 },
+      { name: '영웅 카드 도전', quantity: 11 },
+      { name: '눈부신 카드 11회', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★영웅 카드 도전 소환권 IV (캐릭터 귀속)', quantity: 11 },
+      { name: '★눈부신 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 1 },
+      { name: '★영웅 카드 소환의 증표 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
     ],
   },
   {
     id: 'pkg_004',
-    name: 'Goods_004 (110,000원)',
+    name: '[0128] 고대 클래스 확정 소환 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
     items: [
-      { name: '눈부신 클래스 11회', quantity: 10 },
-      { name: '눈부신 펫 11회', quantity: 10 },
-      { name: '눈부신 투혼 11회', quantity: 10 },
-      { name: '눈부신 카드 11회', quantity: 10 },
+      { name: '눈부신 클래스 11회', quantity: 4 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 4 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
     ],
   },
   {
     id: 'pkg_005',
-    name: 'Goods_005 (33,000원)',
+    name: '[0128] 고대 클래스 확정 소환 스텝업 Ⅱ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
     items: [
-      { name: '영롱한 클래스 11회', quantity: 5 },
-      { name: '영롱한 펫 11회', quantity: 5 },
-      { name: '영롱한 투혼 11회', quantity: 5 },
+      { name: '고대 클래스 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 클래스 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_006',
+    name: '[0128] 고대 클래스 확정 소환 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 5 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 5 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_007',
+    name: '[0128] 고대 클래스 확정 소환 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 클래스 확정', quantity: 2 },
+      { name: '고대 클래스 도전', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★고대 클래스 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★고대 클래스 도전 소환권 (캐릭터 귀속)', quantity: 2 },
+    ],
+  },
+  {
+    id: 'pkg_008',
+    name: '[0128] 고대 클래스 확정 소환 스텝업 V',
+    price: 55000,
+    purchaseLimit: '캐릭터당 6회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 6 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 6 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_009',
+    name: '[0128] 고대 클래스 확정 소환 스텝업 Ⅵ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 클래스 확정', quantity: 5 },
+    ],
+    rawItems: [
+      { name: '★고대 클래스 확정 소환권 (캐릭터 귀속)', quantity: 5 },
+    ],
+  },
+  {
+    id: 'pkg_010',
+    name: '[0128] 고대 카드 확정 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '신비로운 카드 11회', quantity: 6 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★신비로운 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 6 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_011',
+    name: '[0128] 고대 카드 확정 스텝업 Ⅱ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 카드 도전', quantity: 1 },
+      { name: '눈부신 카드 11회', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 카드 도전 소환권 IV (캐릭터 귀속)', quantity: 1 },
+      { name: '★눈부신 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_012',
+    name: '[0128] 고대 카드 확정 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '신비로운 카드 11회', quantity: 7 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★신비로운 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 7 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_013',
+    name: '[0128] 고대 카드 확정 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 카드 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 카드 확정 소환권 IV (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_014',
+    name: '[0128] 부스팅 전설 펫 각성 지원 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 6회',
+    items: [
+      { name: '눈부신 펫 11회', quantity: 4 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 펫 11회 소환권 (캐릭터 귀속)', quantity: 4 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_015',
+    name: '[0128] 부스팅 전설 펫 각성 지원 스텝업 Ⅱ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '대단한 동반자', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★대단한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★펫 각성의 혼불 (캐릭터 귀속)', quantity: 10 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 100 },
+    ],
+  },
+  {
+    id: 'pkg_016',
+    name: '[0128] 부스팅 전설 펫 각성 지원 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 7회',
+    items: [
+      { name: '눈부신 펫 11회', quantity: 5 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 펫 11회 소환권 (캐릭터 귀속)', quantity: 5 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_017',
+    name: '[0128] 부스팅 전설 펫 각성 지원 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '대단한 동반자', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★대단한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★펫 각성의 혼불 (캐릭터 귀속)', quantity: 15 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 150 },
+    ],
+  },
+  {
+    id: 'pkg_018',
+    name: '[0128] 부스팅 전설 펫 각성 지원 스텝업 Ⅴ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 8회',
+    items: [
+      { name: '눈부신 펫 11회', quantity: 6 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 펫 11회 소환권 (캐릭터 귀속)', quantity: 6 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_019',
+    name: '[0128] 부스팅 전설 펫 각성 지원 스텝업 Ⅵ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '전설 펫 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★전설 펫 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★펫 각성의 혼불 (캐릭터 귀속)', quantity: 20 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 200 },
+    ],
+  },
+  {
+    id: 'pkg_020',
+    name: '[0204] 신년 특별 카드 상자 패키지',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '고대 카드 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★신년 특별 카드 상자 (캐릭터 귀속)', quantity: 1 },
+      { name: '★고대 카드 확정 소환권 IV (캐릭터 귀속)', quantity: 1 },
+      { name: '★New Year 주화 (캐릭터 귀속)', quantity: 10 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_021',
+    name: '[0204] 신년 행복한 카드 패키지',
+    price: 12000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '눈부신 카드 11회', quantity: 1 },
+      { name: '신비로운 카드 11회', quantity: 20 },
+      { name: '찬란한 카드 11회', quantity: 50 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 436 },
+      { name: '★눈부신 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 1 },
+      { name: '★신비로운 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 20 },
+      { name: '★찬란한 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 50 },
+      { name: '★New Year 주화 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 1 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 10 },
+    ],
+  },
+  {
+    id: 'pkg_022',
+    name: '[0204] 정화된 몽환석 묶음 패키지',
+    price: 55000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '찬란한 클래스 11회', quantity: 2 },
+      { name: '찬란한 펫 11회', quantity: 2 },
+      { name: '찬란한 투혼 11회', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★정화된 몽환석 (캐릭터 귀속)', quantity: 70 },
+      { name: '★찬란한 클래스 11회 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★찬란한 펫 11회 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★찬란한 투혼 11회 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_023',
+    name: '[0204] 신년 고대 클래스&카드 소환 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 3회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 3 },
+      { name: '눈부신 카드 11회', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 3 },
+      { name: '★눈부신 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_024',
+    name: '[0204] 신년 고대 클래스&카드 소환 스텝업 Ⅱ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 클래스 확정', quantity: 2 },
+      { name: '고대 카드 도전', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 클래스 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★고대 카드 도전 소환권 IV (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_025',
+    name: '[0204] 신년 고대 클래스&카드 소환 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 4 },
+      { name: '눈부신 카드 11회', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 4 },
+      { name: '★눈부신 카드 11회 소환권 IV (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_026',
+    name: '[0204] 신년 고대 클래스&카드 소환 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 클래스 확정', quantity: 3 },
+      { name: '고대 카드 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 클래스 확정 소환권 (캐릭터 귀속)', quantity: 3 },
+      { name: '★고대 카드 확정 소환권 IV (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_027',
+    name: '[0204] 신년 고대 펫&투혼 소환 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 3회',
+    items: [
+      { name: '눈부신 펫 11회', quantity: 3 },
+      { name: '눈부신 투혼 11회', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 펫 11회 소환권 (캐릭터 귀속)', quantity: 3 },
+      { name: '★눈부신 투혼 11회 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_028',
+    name: '[0204] 신년 고대 펫&투혼 소환 스텝업 Ⅱ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 펫 확정', quantity: 3 },
+      { name: '고대 투혼 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 펫 확정 소환권 (캐릭터 귀속)', quantity: 3 },
+      { name: '★고대 투혼 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_029',
+    name: '[0204] 신년 고대 펫&투혼 소환 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '눈부신 펫 11회', quantity: 4 },
+      { name: '눈부신 투혼 11회', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 펫 11회 소환권 (캐릭터 귀속)', quantity: 4 },
+      { name: '★눈부신 투혼 11회 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_030',
+    name: '[0204] 신년 고대 펫&투혼 소환 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '고대 펫 확정', quantity: 3 },
+      { name: '고대 투혼 확정', quantity: 1 },
+      { name: '고대 투혼 도전', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★고대 펫 확정 소환권 (캐릭터 귀속)', quantity: 3 },
+      { name: '★고대 투혼 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★고대 투혼 도전 소환권 (캐릭터 귀속)', quantity: 1 },
+    ],
+  },
+  {
+    id: 'pkg_031',
+    name: '[0204] 부스팅 전설 클래스 각성 지원 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '대단한 각성자', quantity: 1 },
+      { name: '노련한 각성자', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★대단한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★노련한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_032',
+    name: '[0204] 부스팅 전설 클래스 각성 지원 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 6회',
+    items: [
+      { name: '대단한 각성자', quantity: 1 },
+      { name: '노련한 각성자', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★대단한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★노련한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_033',
+    name: '[0204] 부스팅 전설 클래스 각성 지원 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '완벽한 각성자', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★완벽한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 400 },
+    ],
+  },
+  {
+    id: 'pkg_034',
+    name: '[0211] 설맞이 특별 클래스 복주머니 패키지',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '고대 클래스 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★설맞이 특별 클래스 복주머니 (캐릭터 귀속)', quantity: 1 },
+      { name: '★고대 클래스 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★New Year 주화 (캐릭터 귀속)', quantity: 10 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_035',
+    name: '[0211] 설맞이 특별 투혼 복주머니 패키지',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '고대 투혼 확정', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★설맞이 특별 투혼 복주머니 (캐릭터 귀속)', quantity: 1 },
+      { name: '★고대 투혼 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★New Year 주화 (캐릭터 귀속)', quantity: 10 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_036',
+    name: '[0211] 설맞이 행복한 클래스 패키지',
+    price: 12000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 10 },
+      { name: '신비로운 클래스 11회', quantity: 30 },
+      { name: '찬란한 클래스 11회', quantity: 50 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 436 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 10 },
+      { name: '★신비로운 클래스 11회 소환권 (캐릭터 귀속)', quantity: 30 },
+      { name: '★찬란한 클래스 11회 소환권 (캐릭터 귀속)', quantity: 50 },
+      { name: '★New Year 주화 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 1 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 10 },
+    ],
+  },
+  {
+    id: 'pkg_037',
+    name: '[0211] 설맞이 행복한 투혼 패키지',
+    price: 12000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '눈부신 투혼 11회', quantity: 10 },
+      { name: '신비로운 투혼 11회', quantity: 30 },
+      { name: '찬란한 투혼 11회', quantity: 50 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 436 },
+      { name: '★눈부신 투혼 11회 소환권 (캐릭터 귀속)', quantity: 10 },
+      { name: '★신비로운 투혼 11회 소환권 (캐릭터 귀속)', quantity: 30 },
+      { name: '★찬란한 투혼 11회 소환권 (캐릭터 귀속)', quantity: 50 },
+      { name: '★New Year 주화 (캐릭터 귀속)', quantity: 2 },
+      { name: '★황금의 고농축 전투 물약 (캐릭터 귀속)', quantity: 10 },
+      { name: '딸기 파르페 (귀속)', quantity: 1 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 10 },
+    ],
+  },
+  {
+    id: 'pkg_038',
+    name: '[0211] 설맞이 고대 클래스 각성 지원 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 3 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 3 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_039',
+    name: '[0211] 설맞이 고대 클래스 각성 지원 스텝업 Ⅱ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '대단한 각성자', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★대단한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 20 },
+    ],
+  },
+  {
+    id: 'pkg_040',
+    name: '[0211] 설맞이 고대 클래스 각성 지원 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 4 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 4 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_041',
+    name: '[0211] 설맞이 고대 클래스 각성 지원 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '대단한 각성자', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★대단한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 60 },
+    ],
+  },
+  {
+    id: 'pkg_042',
+    name: '[0211] 설맞이 고대 클래스 각성 지원 스텝업 Ⅴ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 2회',
+    items: [
+      { name: '눈부신 클래스 11회', quantity: 5 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★눈부신 클래스 11회 소환권 (캐릭터 귀속)', quantity: 5 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_043',
+    name: '[0211] 설맞이 고대 클래스 각성 지원 스텝업 Ⅵ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '대단한 각성자', quantity: 4 },
+    ],
+    rawItems: [
+      { name: '★대단한 각성자 확정 소환권 (캐릭터 귀속)', quantity: 4 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 120 },
+    ],
+  },
+  {
+    id: 'pkg_044',
+    name: '[0211] 부스팅 전설 펫 각성 지원 스텝업 Ⅰ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 4회',
+    items: [
+      { name: '대단한 동반자', quantity: 1 },
+      { name: '노련한 동반자', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★대단한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★노련한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_045',
+    name: '[0211] 부스팅 전설 펫 각성 지원 스텝업 Ⅲ',
+    price: 55000,
+    purchaseLimit: '캐릭터당 6회',
+    items: [
+      { name: '대단한 동반자', quantity: 1 },
+      { name: '노련한 동반자', quantity: 2 },
+    ],
+    rawItems: [
+      { name: '★젬', quantity: 2000 },
+      { name: '★대단한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★노련한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 2 },
+      { name: '딸기 파르페 (귀속)', quantity: 4 },
+      { name: '상급 신속의 정수 (귀속)', quantity: 30 },
+    ],
+  },
+  {
+    id: 'pkg_046',
+    name: '[0211] 부스팅 전설 펫 각성 지원 스텝업 Ⅳ',
+    price: 1500,
+    purchaseLimit: '캐릭터당 1회',
+    items: [
+      { name: '완벽한 동반자', quantity: 1 },
+    ],
+    rawItems: [
+      { name: '★완벽한 동반자 확정 소환권 (캐릭터 귀속)', quantity: 1 },
+      { name: '★응축된 각성의 기운 (캐릭터 귀속)', quantity: 400 },
     ],
   },
 ];
 
-// 패키지 아이템 선택 드롭다운용 목록
 export const AVAILABLE_ITEMS = [
-  // 11회 소환권 - 클래스
   '찬란한 클래스 11회', '신비로운 클래스 11회', '눈부신 클래스 11회', '영롱한 클래스 11회',
-  // 11회 소환권 - 펫
   '찬란한 펫 11회', '신비로운 펫 11회', '눈부신 펫 11회', '영롱한 펫 11회',
-  // 11회 소환권 - 투혼
   '찬란한 투혼 11회', '신비로운 투혼 11회', '눈부신 투혼 11회', '영롱한 투혼 11회',
-  // 11회 소환권 - 카드
   '찬란한 카드 11회', '신비로운 카드 11회', '눈부신 카드 11회',
-  // 도전 소환권
   '영웅 클래스 도전', '고대 클래스 도전', '전설 클래스 도전',
   '영웅 펫 도전', '고대 펫 도전', '전설 펫 도전',
   '영웅 투혼 도전', '고대 투혼 도전', '전설 투혼 도전',
   '영웅 카드 도전', '고대 카드 도전', '전설 카드 도전',
-  // 확정 소환권
   '영웅 클래스 확정', '고대 클래스 확정', '전설 클래스 확정',
   '영웅 펫 확정', '고대 펫 확정', '전설 펫 확정',
   '영웅 투혼 확정', '고대 투혼 확정', '전설 투혼 확정',
   '영웅 카드 확정', '고대 카드 확정', '전설 카드 확정',
-  // 보물 사냥꾼
   '미숙한 보물사냥꾼', '숙달된 보물사냥꾼', '능숙한 보물사냥꾼',
   '노련한 보물사냥꾼', '대단한 보물사냥꾼', '완벽한 보물사냥꾼',
-  // 각성 아이템
   '노련한 각성자', '대단한 각성자', '완벽한 각성자',
   '노련한 동반자', '대단한 동반자', '완벽한 동반자',
 ];
