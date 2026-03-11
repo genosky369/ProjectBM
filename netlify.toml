@@ -1,0 +1,9 @@
+[build]
+  base      = "simulator-v2"
+  command   = "npm run build"
+  publish   = "simulator-v2/dist"
+
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
