@@ -101,13 +101,6 @@ export default function AnalysisTab({ data, salesDataMap, bmGroups, onSalesLoad,
             <span className="analysis-sys-value">{grandPrice.toLocaleString()}</span>
             <span className="analysis-sys-unit">원</span>
           </div>
-          {grandRevenue > 0 && (
-            <div className="analysis-grand-cell">
-              <span className="analysis-sys-label">총 매출</span>
-              <span className="analysis-sys-value">{fmtWon(grandRevenue)}</span>
-              <span className="analysis-sys-unit">원</span>
-            </div>
-          )}
         </div>
       </div>
 
