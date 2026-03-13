@@ -118,7 +118,7 @@ export default function App() {
         .map(g => ({
           date: g.label,
           ticketItems: g.packages
-            .filter(p => p.items.length > 0)
+            .filter(p => !p.excluded && p.items.length > 0)
             .flatMap(p => parsePackageItems(p.items)),
         }))
         .filter(e => e.ticketItems.length > 0);
@@ -166,14 +166,15 @@ export default function App() {
   const analysisData = useMemo(() => {
     const sorted = [...bmGroups].sort((a, b) => (b.dateKey || "").localeCompare(a.dateKey || ""));
     return sorted.map(group => {
-      const allItems = group.packages
+      const activePkgs = group.packages.filter(p => !p.excluded);
+      const allItems = activePkgs
         .filter(p => p.items.length > 0)
         .flatMap(p => parsePackageItems(p.items));
       const godae = calcGodaeEquivalent(allItems);
-      const totalPrice = group.packages.reduce((s, p) => s + (p.price || 0), 0);
+      const totalPrice = activePkgs.reduce((s, p) => s + (p.price || 0), 0);
       const groupSales = salesDataMap[group.dateKey] || null;
       const hasSales = !!groupSales;
-      const pkgDetails = group.packages.map(pkg => {
+      const pkgDetails = activePkgs.map(pkg => {
         const items = parsePackageItems(pkg.items);
         const baseName = normalizeName(pkg.name);
         let sales = null;
@@ -201,7 +202,7 @@ export default function App() {
         : null;
       return {
         label: group.label, dateKey: group.dateKey,
-        godae, totalPrice, pkgDetails, pkgCount: group.packages.length,
+        godae, totalPrice, pkgDetails, pkgCount: activePkgs.length,
         hasSales, totalRevenue,
         salesPeriod: groupSales?.periodLabel || null,
       };

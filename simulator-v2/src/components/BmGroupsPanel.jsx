@@ -53,6 +53,11 @@ function BmGroupCard({ group, index, isExpanded, onToggle, onRemove, onUpdate })
     onUpdate(g => ({ ...g, packages: g.packages.filter(p => p.id !== pkgId) }));
   const updatePackage = (pkgId, fn) =>
     onUpdate(g => ({ ...g, packages: g.packages.map(p => p.id === pkgId ? fn(p) : p) }));
+  const toggleExclude = pkgId =>
+    onUpdate(g => ({ ...g, packages: g.packages.map(p => p.id === pkgId ? { ...p, excluded: !p.excluded } : p) }));
+  const allExcluded = group.packages.length > 0 && group.packages.every(p => p.excluded);
+  const toggleAll = () =>
+    onUpdate(g => ({ ...g, packages: g.packages.map(p => ({ ...p, excluded: !allExcluded ? true : false })) }));
 
   return (
     <div className="bm-group-card">
@@ -65,6 +70,10 @@ function BmGroupCard({ group, index, isExpanded, onToggle, onRemove, onUpdate })
             onClick={e => e.stopPropagation()} />
         </div>
         <div className="pkg-header-right">
+          <label className="group-select-all" onClick={e => e.stopPropagation()}>
+            <input type="checkbox" checked={!allExcluded} onChange={toggleAll} />
+            <span className="group-select-label">전체</span>
+          </label>
           <span className="pkg-meta">{group.packages.length}개 패키지</span>
           <button className="icon-btn" onClick={e => { e.stopPropagation(); onRemove(); }}>
             <Trash2 size={12} />
@@ -76,7 +85,8 @@ function BmGroupCard({ group, index, isExpanded, onToggle, onRemove, onUpdate })
           {group.packages.map((pkg, i) => (
             <PackageCard key={pkg.id} pkg={pkg} index={i + 1}
               onRemove={() => removePackage(pkg.id)}
-              onUpdate={fn => updatePackage(pkg.id, fn)} />
+              onUpdate={fn => updatePackage(pkg.id, fn)}
+              onToggleExclude={() => toggleExclude(pkg.id)} />
           ))}
           <button className="add-item-btn" onClick={addPackage} style={{ marginTop: 4 }}>
             <Plus size={11} /> 패키지 추가
@@ -88,7 +98,7 @@ function BmGroupCard({ group, index, isExpanded, onToggle, onRemove, onUpdate })
 }
 
 /** Individual package card with item rows */
-function PackageCard({ pkg, index, onRemove, onUpdate }) {
+function PackageCard({ pkg, index, onRemove, onUpdate, onToggleExclude }) {
   const addItem = () =>
     onUpdate(p => ({ ...p, items: [...p.items, { name: "찬란한 클래스 11회", quantity: 1 }] }));
   const removeItem = i =>
@@ -97,10 +107,14 @@ function PackageCard({ pkg, index, onRemove, onUpdate }) {
     onUpdate(p => ({ ...p, items: p.items.map((it, idx) => idx === i ? { ...it, [field]: value } : it) }));
   const totalQty = pkg.items.reduce((s, it) => s + (it.quantity || 0), 0);
 
+  const isExcluded = !!pkg.excluded;
+
   return (
-    <div className="pkg-card">
+    <div className={"pkg-card" + (isExcluded ? " pkg-excluded" : "")}>
       <div className="pkg-card-header">
         <div className="pkg-header-left">
+          <input type="checkbox" className="pkg-checkbox" checked={!isExcluded}
+            onChange={onToggleExclude} title={isExcluded ? "시뮬레이션에 포함" : "시뮬레이션에서 제외"} />
           <span className="pkg-index">{index}</span>
           <input className="pkg-name-input" value={pkg.name}
             onChange={e => onUpdate(p => ({ ...p, name: e.target.value }))} />

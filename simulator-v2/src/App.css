@@ -678,7 +678,19 @@
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--surface);
+  transition: opacity 0.15s;
 }
+.pkg-card.pkg-excluded {
+  opacity: 0.4;
+}
+.pkg-checkbox {
+  width: 14px; height: 14px; cursor: pointer; flex-shrink: 0;
+}
+.group-select-all {
+  display: flex; align-items: center; gap: 3px; cursor: pointer; font-size: 11px; color: var(--text-secondary);
+}
+.group-select-all input { width: 13px; height: 13px; cursor: pointer; }
+.group-select-label { white-space: nowrap; }
 
 .pkg-card-header {
   display: flex;
